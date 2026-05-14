@@ -31,7 +31,7 @@ def test_create_student(client):
     data = response.json()
     assert data["name"] == "Ravi Kumar"
     assert data["email"] == "ravi@test.com"
-    assert "id" in data            # auto-generated id must be present
+    assert "id" in data          
 
 def test_create_student_duplicate_email(client):
     """Duplicate email must return 400, not 500."""

@@ -6,7 +6,6 @@ from sqlalchemy.orm import sessionmaker
 from main import app
 from database import Base, get_db
 
-# Use a separate SQLite file for tests — never touch kuppam.db
 TEST_DATABASE_URL = "sqlite:///./test_kuppam.db"
 
 test_engine = create_engine(
@@ -26,8 +25,6 @@ def override_get_db():
         yield db
     finally:
         db.close()
-
-# Tell FastAPI: when a route asks for get_db, use override_get_db instead
 app.dependency_overrides[get_db] = override_get_db
 
 @pytest.fixture(scope="module")
