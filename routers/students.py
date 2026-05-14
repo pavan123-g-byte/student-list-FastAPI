@@ -1,5 +1,3 @@
-# routers/students.py
-
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError

@@ -1,4 +1,3 @@
-# tests/conftest.py
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
@@ -33,10 +32,6 @@ app.dependency_overrides[get_db] = override_get_db
 
 @pytest.fixture(scope="module")
 def client():
-    """
-    Creates all tables in the test database before tests run.
-    Drops all tables after the module finishes (clean state for next run).
-    """
     Base.metadata.create_all(bind=test_engine)
     yield TestClient(app)
     Base.metadata.drop_all(bind=test_engine)

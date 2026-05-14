@@ -1,5 +1,3 @@
-# tests/test_students.py
-
 def get_auth_token(client, username="student_tester", password="pass123"):
     """Helper: register a user and return their JWT token."""
     client.post("/auth/register", json={"username": username, "password": password})

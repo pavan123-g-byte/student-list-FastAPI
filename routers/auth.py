@@ -1,4 +1,3 @@
-# routers/auth.py
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
@@ -18,7 +17,6 @@ class Token(BaseModel):
     access_token: str
     token_type: str
 
-# ── REGISTER ─────────────────────────────────────────────────
 @router.post("/register", status_code=201)
 def register(user: UserCreate, db: Session = Depends(get_db)):
     existing = db.query(User).filter(User.username == user.username).first()

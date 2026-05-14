@@ -9,7 +9,6 @@ from dependencies import get_current_user
 
 router = APIRouter(prefix="/ai", tags=["AI"])
 
-# ── Module-level setup ───────────────────────────────────────────────
 if not os.getenv("GEMINI_API_KEY"):
     raise RuntimeError("GEMINI_API_KEY is not set in .env")
 
@@ -22,8 +21,7 @@ SYSTEM_CONTEXT = (
     "Answer questions about Python, web development, and AI. "
     "Keep responses under 200 words unless more detail is truly needed."
 )
-
-# ── Session management ───────────────────────────────────────────────
+  
 chat_sessions: dict[int, object] = {}
 
 def get_or_create_session(user_id: int):
@@ -37,14 +35,12 @@ def get_or_create_session(user_id: int):
         )
     return chat_sessions[user_id]
 
-# ── Schemas for /chat ────────────────────────────────────────────────
 class ChatRequest(BaseModel):
     message: str = Field(min_length=1, max_length=1000)
 
 class ChatResponse(BaseModel):
     reply: str
 
-# ── POST /ai/chat ────────────────────────────────────────────────────
 @router.post("/chat", response_model=ChatResponse)
 def chat_with_ai(
     request: ChatRequest,
@@ -61,7 +57,7 @@ def chat_with_ai(
         print(f"[chat] Gemini error: {exc}")
         raise HTTPException(status_code=503, detail="AI service unavailable.")
 
-# ── DELETE /ai/chat/reset ────────────────────────────────────────────
+
 @router.delete("/chat/reset", status_code=204)
 def reset_chat(current_user=Depends(get_current_user)):
     chat_sessions.pop(current_user.id, None)

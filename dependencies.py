@@ -1,4 +1,3 @@
-# dependencies.py
 from fastapi import Depends, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import JWTError
